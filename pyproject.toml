@@ -1,0 +1,44 @@
+[build-system]
+requires = ["maturin>=1.3,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "windows-capture-workspace"
+version = "1.3.5-beta"
+description = "Fastest Windows Screen Capture Library For Python 🔥"
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+license = {file = "LICENSE"}
+authors = [{ name = "NiiightmareXD" }]
+keywords = ["screen", "capture", "screenshot", "graphics", "windows"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: GPU",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Rust",
+    "Programming Language :: Python",
+    "Topic :: Multimedia",
+    "Topic :: Multimedia :: Graphics :: Capture",
+    "Topic :: Multimedia :: Graphics :: Capture :: Screen Capture",
+    "Topic :: Multimedia :: Video :: Capture",
+]
+dependencies = [
+    "numpy>=2.0.1",
+    "opencv-python>=4.10.0.84",
+]
+
+[tool.rye]
+managed = true
+universal = true
+dev-dependencies = [
+    "ruff>=0.5.7",
+    "pylint>=3.2.6",
+    "isort>=5.13.2",
+    "mypy>=1.11.1",
+    "pip>=24.2",
+]
+workspaces = ["windows-capture-python"]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
