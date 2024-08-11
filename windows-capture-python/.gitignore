@@ -1,2 +1,4 @@
 target/
 develop/
+requirements*.lock
+.python-version

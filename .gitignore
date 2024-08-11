@@ -1,1 +1,3 @@
 target/
+windows_capture*.egg-info/
+dist/
