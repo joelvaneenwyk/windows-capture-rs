@@ -19,6 +19,13 @@ categories = [
 resolver = "2"
 
 [dependencies]
+pyo3 = { version = "0.22.2", features = [
+    "extension-module",
+    "auto-initialize",
+    "abi3",
+    "abi3-py39",
+] }
+
 # Windows API
 windows = { version = "0.58.0", features = [
     "Win32_System_WinRT_Graphics_Capture",
@@ -64,3 +71,7 @@ doc-scrape-examples = false
 
 [workspace]
 members = ["windows-capture-python"]
+
+[features]
+extension-module = ["pyo3/extension-module"]
+default = ["extension-module"]
