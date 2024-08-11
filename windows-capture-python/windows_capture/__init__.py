@@ -1,11 +1,16 @@
 """Fastest Windows Screen Capture Library For Python 🔥."""
 
-from .windows_capture import NativeWindowsCapture, NativeCaptureControl
 import ctypes
-import numpy
-import cv2
 import types
 from typing import Optional
+
+import cv2  # type: ignore  # pylint: disable=import-error
+import numpy  # type: ignore  # pylint: disable=import-error
+
+from .windows_capture import (  # type: ignore  # pylint: disable=import-error
+    NativeCaptureControl,
+    NativeWindowsCapture,
+)
 
 
 class Frame:
@@ -45,23 +50,17 @@ class Frame:
         """Save The Frame As An Image To The Specified Path"""
         cv2.imwrite(path, self.frame_buffer)
 
-    def convert_to_bgr(self) -> "Frame":
+    def convert_to_bgr(self) -> 'Frame':
         """Converts The self.frame_buffer Pixel Type To Bgr Instead Of Bgra"""
         bgr_frame_buffer = self.frame_buffer[:, :, :3]
 
         return Frame(bgr_frame_buffer, self.width, self.height)
 
-    def crop(
-        self, start_width: int, start_height: int, end_width: int, end_height: int
-    ) -> "Frame":
+    def crop(self, start_width: int, start_height: int, end_width: int, end_height: int) -> 'Frame':
         """Crops The Frame To The Specified Region"""
-        cropped_frame_buffer = self.frame_buffer[
-            start_height:end_height, start_width:end_width, :
-        ]
+        cropped_frame_buffer = self.frame_buffer[start_height:end_height, start_width:end_width, :]
 
-        return Frame(
-            cropped_frame_buffer, end_width - start_width, end_height - start_height
-        )
+        return Frame(cropped_frame_buffer, end_width - start_width, end_height - start_height)
 
 
 class InternalCaptureControl:
@@ -197,18 +196,18 @@ class WindowsCapture:
     def start(self) -> None:
         """Starts The Capture Thread"""
         if self.frame_handler is None:
-            raise Exception("on_frame_arrived Event Handler Is Not Set")
+            raise Exception('on_frame_arrived Event Handler Is Not Set')
         elif self.closed_handler is None:
-            raise Exception("on_closed Event Handler Is Not Set")
+            raise Exception('on_closed Event Handler Is Not Set')
 
         self.capture.start()
 
     def start_free_threaded(self) -> CaptureControl:
         """Starts The Capture Thread On A Dedicated Thread"""
         if self.frame_handler is None:
-            raise Exception("on_frame_arrived Event Handler Is Not Set")
+            raise Exception('on_frame_arrived Event Handler Is Not Set')
         elif self.closed_handler is None:
-            raise Exception("on_closed Event Handler Is Not Set")
+            raise Exception('on_closed Event Handler Is Not Set')
 
         native_capture_control = self.capture.start_free_threaded()
 
@@ -253,21 +252,21 @@ class WindowsCapture:
                 )
 
         else:
-            raise Exception("on_frame_arrived Event Handler Is Not Set")
+            raise Exception('on_frame_arrived Event Handler Is Not Set')
 
     def on_closed(self) -> None:
         """This Method Is Called Before The on_closed Callback Function"""
         if self.closed_handler:
             self.closed_handler()
         else:
-            raise Exception("on_closed Event Handler Is Not Set")
+            raise Exception('on_closed Event Handler Is Not Set')
 
     def event(self, handler: types.FunctionType) -> types.FunctionType:
         """Overrides The Callback Function"""
-        if handler.__name__ == "on_frame_arrived":
+        if handler.__name__ == 'on_frame_arrived':
             self.frame_handler = handler
-        elif handler.__name__ == "on_closed":
+        elif handler.__name__ == 'on_closed':
             self.closed_handler = handler
         else:
-            raise Exception("Invalid Event Handler Use on_frame_arrived Or on_closed")
+            raise Exception('Invalid Event Handler Use on_frame_arrived Or on_closed')
         return handler
