@@ -12,6 +12,6 @@
 -e file:.
 numpy==2.0.1
     # via opencv-python
-    # via windows-capture-workspace
+    # via windows-capture
 opencv-python==4.10.0.84
-    # via windows-capture-workspace
+    # via windows-capture

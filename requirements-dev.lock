@@ -18,6 +18,7 @@ dill==0.3.8
     # via pylint
 isort==5.13.2
     # via pylint
+maturin==1.7.0
 mccabe==0.7.0
     # via pylint
 mypy==1.11.1
@@ -25,9 +26,9 @@ mypy-extensions==1.0.0
     # via mypy
 numpy==2.0.1
     # via opencv-python
-    # via windows-capture-workspace
+    # via windows-capture
 opencv-python==4.10.0.84
-    # via windows-capture-workspace
+    # via windows-capture
 pip==24.2
 platformdirs==4.2.2
     # via pylint
