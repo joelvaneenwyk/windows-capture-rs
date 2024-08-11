@@ -1,9 +1,16 @@
+Bgra
 Captue
+cdylib
+ctypeslib
+Dxgi
 gameplay
+imwrite
 isort
 lockfiles
 maturin
+msvc
 mypy
+ndarray
 Niiightmare
 numpy
 opencv
@@ -12,3 +19,5 @@ pylint
 pyproject
 Rgba
 struct
+taskfile
+thiserror

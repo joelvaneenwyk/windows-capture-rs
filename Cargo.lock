@@ -309,6 +309,7 @@ name = "windows-capture"
 version = "1.3.5"
 dependencies = [
  "parking_lot",
+ "pyo3",
  "rayon",
  "thiserror",
  "windows",
