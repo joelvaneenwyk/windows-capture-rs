@@ -27,8 +27,23 @@ classifiers = [
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
+python-source = "./windows-capture-python/windows_capture/"
+module-name = "windows_capture"
 
 [tool.rye]
 dev-dependencies = [
     "maturin>=1.7.0",
+    "isort>=5.13.2",
+    "mypy>=1.11.1",
+    "pylint>=3.2.6",
+    "ruff>=0.5.7",
+    "pip>=24.2",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+docstring-code-format = true
