@@ -1,6 +1,14 @@
 Captue
 gameplay
+isort
+lockfiles
+maturin
+mypy
 Niiightmare
+numpy
+opencv
 println
+pylint
+pyproject
 Rgba
 struct
