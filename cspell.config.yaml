@@ -1,0 +1,11 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions:
+  - name: windows-capture
+    path: ./.github/config/windows-capture.dict
+    addWords: true
+dictionaries:
+  - windows-capture
+words: []
+ignoreWords: []
+import: []
