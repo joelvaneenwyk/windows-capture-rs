@@ -1,17 +1,13 @@
-# Windows Capture &emsp; [![Licence]][Licence URL] [![Build Status]][repository] [![Latest Version]][pypi.org]
+# Windows Capture // Python
 
-[Licence]: https://img.shields.io/crates/l/windows-capture
-[Licence URL]: https://github.com/NiiightmareXD/windows-capture/blob/main/windows-capture-python/LICENCE
-
-[Build Status]: https://img.shields.io/github/actions/workflow/status/NiiightmareXD/windows-capture/rust.yml
-[repository]: https://github.com/NiiightmareXD/windows-capture/tree/main/windows-capture-python
-
-[Latest Version]: https://img.shields.io/pypi/v/windows-capture
-[pypi.org]: https://pypi.org/project/windows-capture
+[![License]][License URL]
+[![Build Status]][repository]
+[![Latest Version]][pypi.org]
 
 **Windows Capture** is a highly efficient Rust and Python library that enables you to capture the screen using the Graphics Capture API effortlessly. This library allows you to easily capture the screen of your Windows-based computer and use it for various purposes, such as creating instructional videos, taking screenshots, or recording your gameplay. With its intuitive interface and robust functionality, Windows Capture is an excellent choice for anyone looking for a reliable, easy-to-use screen-capturing solution.
 
-**Note** this README.md is for [Python library](https://github.com/NiiightmareXD/windows-capture/tree/main/windows-capture-python) Rust library can be found [here](https://github.com/NiiightmareXD/windows-capture)  
+> [!NOTE]
+> This [README.md](./README.md) is for the [`windows-capture` Python library](https://github.com/NiiightmareXD/windows-capture) whereas the `windows-capture` **Rust** library can be found [here](../README.md).
 
 ## Features
 
@@ -24,7 +20,7 @@
 
 Run this command
 
-```
+```shell
 pip install windows-capture
 ```
 
@@ -77,3 +73,12 @@ Contributions are welcome! If you find a bug or want to add new features to the 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+[License]: https://img.shields.io/crates/l/windows-capture
+[License URL]: https://github.com/NiiightmareXD/windows-capture/blob/main/windows-capture-python/LICENSE
+
+[Build Status]: https://img.shields.io/github/actions/workflow/status/NiiightmareXD/windows-capture/rust.yml
+[repository]: https://github.com/NiiightmareXD/windows-capture/tree/main/windows-capture-python
+
+[Latest Version]: https://img.shields.io/pypi/v/windows-capture
+[pypi.org]: https://pypi.org/project/windows-capture
