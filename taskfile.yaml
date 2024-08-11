@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BUILD_DIR_NAME: >-
+    .build
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  build:
+    sources:
+      - src/*.rs
+      - windows-capture-python/src/*.rs
+      - windows-capture-python/windows_capture/*.py
+      - pyproject.toml
+      - requirements*.lock
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+    cmds:
+      - cmd: rye sync
+      - cmd: cargo build -p windows-capture-python --verbose
+      - cmd: cargo test -p windows-capture-python --verbose
