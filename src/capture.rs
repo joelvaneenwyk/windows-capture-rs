@@ -2,8 +2,9 @@ use std::{
     mem,
     os::windows::prelude::AsRawHandle,
     sync::{
+        Arc,
         atomic::{self, AtomicBool},
-        mpsc, Arc,
+        mpsc,
     },
     thread::{self, JoinHandle},
 };
@@ -18,13 +19,13 @@ use windows::{
         System::{
             Threading::{GetCurrentThreadId, GetThreadId},
             WinRT::{
-                CreateDispatcherQueueController, DispatcherQueueOptions, RoInitialize,
-                RoUninitialize, DQTAT_COM_NONE, DQTYPE_THREAD_CURRENT, RO_INIT_MULTITHREADED,
+                CreateDispatcherQueueController, DQTAT_COM_NONE, DQTYPE_THREAD_CURRENT,
+                DispatcherQueueOptions, RO_INIT_MULTITHREADED, RoInitialize, RoUninitialize,
             },
         },
         UI::WindowsAndMessaging::{
-            DispatchMessageW, GetMessageW, PostQuitMessage, PostThreadMessageW, TranslateMessage,
-            MSG, WM_QUIT,
+            DispatchMessageW, GetMessageW, MSG, PostQuitMessage, PostThreadMessageW,
+            TranslateMessage, WM_QUIT,
         },
     },
 };

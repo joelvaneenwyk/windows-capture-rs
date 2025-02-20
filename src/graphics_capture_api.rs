@@ -1,11 +1,10 @@
 use std::sync::{
-    atomic::{self, AtomicBool},
     Arc,
+    atomic::{self, AtomicBool},
 };
 
 use parking_lot::Mutex;
 use windows::{
-    core::{IInspectable, Interface, HSTRING},
     Foundation::{EventRegistrationToken, Metadata::ApiInformation, TypedEventHandler},
     Graphics::{
         Capture::{Direct3D11CaptureFramePool, GraphicsCaptureItem, GraphicsCaptureSession},
@@ -14,16 +13,17 @@ use windows::{
     Win32::{
         Foundation::{LPARAM, WPARAM},
         Graphics::Direct3D11::{
-            ID3D11Device, ID3D11DeviceContext, ID3D11Texture2D, D3D11_TEXTURE2D_DESC,
+            D3D11_TEXTURE2D_DESC, ID3D11Device, ID3D11DeviceContext, ID3D11Texture2D,
         },
         System::WinRT::Direct3D11::IDirect3DDxgiInterfaceAccess,
         UI::WindowsAndMessaging::{PostThreadMessageW, WM_QUIT},
     },
+    core::{HSTRING, IInspectable, Interface},
 };
 
 use crate::{
     capture::GraphicsCaptureApiHandler,
-    d3d11::{self, create_direct3d_device, SendDirectX},
+    d3d11::{self, SendDirectX, create_direct3d_device},
     frame::Frame,
     settings::{ColorFormat, CursorCaptureSettings, DrawBorderSettings},
 };

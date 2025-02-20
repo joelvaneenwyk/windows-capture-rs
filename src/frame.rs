@@ -11,9 +11,9 @@ use windows::{
     Graphics::DirectX::Direct3D11::IDirect3DSurface,
     Win32::Graphics::{
         Direct3D11::{
-            ID3D11Device, ID3D11DeviceContext, ID3D11Texture2D, D3D11_BOX, D3D11_CPU_ACCESS_READ,
-            D3D11_CPU_ACCESS_WRITE, D3D11_MAPPED_SUBRESOURCE, D3D11_MAP_READ_WRITE,
-            D3D11_TEXTURE2D_DESC, D3D11_USAGE_STAGING,
+            D3D11_BOX, D3D11_CPU_ACCESS_READ, D3D11_CPU_ACCESS_WRITE, D3D11_MAP_READ_WRITE,
+            D3D11_MAPPED_SUBRESOURCE, D3D11_TEXTURE2D_DESC, D3D11_USAGE_STAGING, ID3D11Device,
+            ID3D11DeviceContext, ID3D11Texture2D,
         },
         Dxgi::Common::{DXGI_FORMAT, DXGI_SAMPLE_DESC},
     },

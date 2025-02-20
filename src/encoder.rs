@@ -3,15 +3,15 @@ use std::{
     path::Path,
     slice,
     sync::{
+        Arc,
         atomic::{self, AtomicBool},
-        mpsc, Arc,
+        mpsc,
     },
     thread::{self, JoinHandle},
 };
 
 use parking_lot::{Condvar, Mutex};
 use windows::{
-    core::HSTRING,
     Foundation::{EventRegistrationToken, TimeSpan, TypedEventHandler},
     Graphics::{
         DirectX::Direct3D11::IDirect3DSurface,
@@ -36,6 +36,7 @@ use windows::{
             Buffer, DataReader, IRandomAccessStream, InMemoryRandomAccessStream, InputStreamOptions,
         },
     },
+    core::HSTRING,
 };
 
 use crate::{
