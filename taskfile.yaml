@@ -21,7 +21,9 @@ tasks:
       - requirements*.lock
       - '**/Cargo.toml'
       - '**/Cargo.lock'
+    generates:
+      - target/release/windows_capture.*
     cmds:
-      - cmd: rye sync
+      - cmd: uv sync
       - cmd: cargo build -p windows-capture-python --verbose
       - cmd: cargo test -p windows-capture-python --verbose
