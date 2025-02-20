@@ -89,7 +89,7 @@ impl<'a> Frame<'a> {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub fn new(
+    pub const fn new(
         d3d_device: &'a ID3D11Device,
         frame_surface: IDirect3DSurface,
         frame_texture: ID3D11Texture2D,
@@ -427,7 +427,7 @@ impl<'a> FrameBuffer<'a> {
     /// A new `FrameBuffer` instance.
     #[must_use]
     #[inline]
-    pub fn new(
+    pub const fn new(
         raw_buffer: &'a mut [u8],
         buffer: &'a mut Vec<u8>,
         width: u32,
@@ -485,7 +485,7 @@ impl<'a> FrameBuffer<'a> {
     /// Get the raw pixel data with possible padding.
     #[must_use]
     #[inline]
-    pub fn as_raw_buffer(&mut self) -> &mut [u8] {
+    pub const fn as_raw_buffer(&mut self) -> &mut [u8] {
         self.raw_buffer
     }
 

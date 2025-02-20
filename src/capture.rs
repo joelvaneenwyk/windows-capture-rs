@@ -93,7 +93,7 @@ impl<T: GraphicsCaptureApiHandler + Send + 'static, E> CaptureControl<T, E> {
     pub fn is_finished(&self) -> bool {
         self.thread_handle
             .as_ref()
-            .map_or(true, std::thread::JoinHandle::is_finished)
+            .is_none_or(std::thread::JoinHandle::is_finished)
     }
 
     /// Gets the join handle for the capture thread.
