@@ -166,10 +166,11 @@ impl<'a> Frame<'a> {
     /// # Safety
     ///
     /// This method is unsafe because it returns a raw pointer to the IDirect3DSurface.
+    #[allow(clippy::missing_safety_doc)]
     #[must_use]
     #[inline]
-    pub unsafe fn as_raw_surface(&self) -> IDirect3DSurface {
-        self.frame_surface.clone()
+    pub const unsafe fn as_raw_surface(&self) -> &IDirect3DSurface {
+        &self.frame_surface
     }
 
     /// Get the raw texture of the frame.
@@ -177,8 +178,20 @@ impl<'a> Frame<'a> {
     /// # Returns
     ///
     /// The ID3D11Texture2D representing the raw texture of the frame.
+    #[allow(clippy::missing_safety_doc)]
+    #[must_use]
     #[inline]
-    pub fn texture(&self) -> Result<ID3D11Texture2D, Error> {
+    pub const unsafe fn as_raw_texture(&self) -> &ID3D11Texture2D {
+        &self.frame_texture
+    }
+
+    /// Get the frame buffer.
+    ///
+    /// # Returns
+    ///
+    /// The FrameBuffer containing the frame data.
+    #[inline]
+    pub fn buffer(&mut self) -> Result<FrameBuffer, Error> {
         // Texture Settings
         let texture_desc = D3D11_TEXTURE2D_DESC {
             Width: self.width,
@@ -209,18 +222,6 @@ impl<'a> Frame<'a> {
         unsafe {
             self.context.CopyResource(&texture, &self.frame_texture);
         };
-
-        Ok(texture)
-    }
-
-    /// Get the frame buffer.
-    ///
-    /// # Returns
-    ///
-    /// The FrameBuffer containing the frame data.
-    #[inline]
-    pub fn buffer(&mut self) -> Result<FrameBuffer, Error> {
-        let texture = self.texture()?;
 
         // Map the texture to enable CPU access
         let mut mapped_resource = D3D11_MAPPED_SUBRESOURCE::default();
@@ -494,7 +495,7 @@ impl<'a> FrameBuffer<'a> {
     ///
     /// A mutable reference to the buffer containing pixel data without padding.
     #[inline]
-    pub fn as_raw_nopadding_buffer(&mut self) -> Result<&mut [u8], Error> {
+    pub fn as_nopadding_buffer(&mut self) -> Result<&mut [u8], Error> {
         if !self.has_padding() {
             return Ok(self.raw_buffer);
         }
@@ -548,7 +549,7 @@ impl<'a> FrameBuffer<'a> {
         let height = self.height;
 
         let bytes = ImageEncoder::new(format, self.color_format).encode(
-            self.as_raw_nopadding_buffer()?,
+            self.as_nopadding_buffer()?,
             width,
             height,
         )?;

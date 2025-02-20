@@ -7,7 +7,8 @@ use std::sync::Arc;
 
 use ::windows_capture::{
     capture::{
-        CaptureControl, CaptureControlError, GraphicsCaptureApiError, GraphicsCaptureApiHandler,
+        CaptureControl, CaptureControlError, Context, GraphicsCaptureApiError,
+        GraphicsCaptureApiHandler,
     },
     frame::{self, Frame},
     graphics_capture_api::InternalCaptureControl,
@@ -192,8 +193,8 @@ impl NativeWindowsCapture {
 
             let settings = Settings::new(
                 window,
-                self.cursor_capture.clone(),
-                self.draw_border.clone(),
+                self.cursor_capture,
+                self.draw_border,
                 ColorFormat::Bgra8,
                 (
                     self.on_frame_arrived_callback.clone(),
@@ -204,17 +205,8 @@ impl NativeWindowsCapture {
             match InnerNativeWindowsCapture::start(settings) {
                 Ok(()) => (),
                 Err(e) => {
-                    if let GraphicsCaptureApiError::FrameHandlerError(
-                        InnerNativeWindowsCaptureError::PythonError(ref e),
-                    ) = e
-                    {
-                        return Err(PyException::new_err(format!(
-                            "Capture Session Threw An Exception -> {e}",
-                        )));
-                    }
-
                     return Err(PyException::new_err(format!(
-                        "Capture Session Threw An Exception -> {e}",
+                        "InnerNativeWindowsCapture::start Threw An Exception -> {e}",
                     )));
                 }
             }
@@ -230,8 +222,8 @@ impl NativeWindowsCapture {
 
             let settings = Settings::new(
                 monitor,
-                self.cursor_capture.clone(),
-                self.draw_border.clone(),
+                self.cursor_capture,
+                self.draw_border,
                 ColorFormat::Bgra8,
                 (
                     self.on_frame_arrived_callback.clone(),
@@ -242,17 +234,8 @@ impl NativeWindowsCapture {
             match InnerNativeWindowsCapture::start(settings) {
                 Ok(()) => (),
                 Err(e) => {
-                    if let GraphicsCaptureApiError::FrameHandlerError(
-                        InnerNativeWindowsCaptureError::PythonError(ref e),
-                    ) = e
-                    {
-                        return Err(PyException::new_err(format!(
-                            "Capture Session Threw An Exception -> {e}",
-                        )));
-                    }
-
                     return Err(PyException::new_err(format!(
-                        "Capture Session Threw An Exception -> {e}",
+                        "InnerNativeWindowsCapture::start Threw An Exception -> {e}",
                     )));
                 }
             }
@@ -276,8 +259,8 @@ impl NativeWindowsCapture {
 
             let settings = Settings::new(
                 window,
-                self.cursor_capture.clone(),
-                self.draw_border.clone(),
+                self.cursor_capture,
+                self.draw_border,
                 ColorFormat::Bgra8,
                 (
                     self.on_frame_arrived_callback.clone(),
@@ -316,8 +299,8 @@ impl NativeWindowsCapture {
 
             let settings = Settings::new(
                 monitor,
-                self.cursor_capture.clone(),
-                self.draw_border.clone(),
+                self.cursor_capture,
+                self.draw_border,
                 ColorFormat::Bgra8,
                 (
                     self.on_frame_arrived_callback.clone(),
@@ -357,9 +340,9 @@ struct InnerNativeWindowsCapture {
 
 #[derive(thiserror::Error, Debug)]
 pub enum InnerNativeWindowsCaptureError {
-    #[error("Python Callback Error")]
+    #[error("Python Callback Error: {0}")]
     PythonError(pyo3::PyErr),
-    #[error("Frame Process Error")]
+    #[error("Frame Process Error: {0}")]
     FrameProcessError(frame::Error),
 }
 
@@ -368,10 +351,10 @@ impl GraphicsCaptureApiHandler for InnerNativeWindowsCapture {
     type Error = InnerNativeWindowsCaptureError;
 
     #[inline]
-    fn new((on_frame_arrived_callback, on_closed): Self::Flags) -> Result<Self, Self::Error> {
+    fn new(ctx: Context<Self::Flags>) -> Result<Self, Self::Error> {
         Ok(Self {
-            on_frame_arrived_callback,
-            on_closed,
+            on_frame_arrived_callback: ctx.flags.0,
+            on_closed: ctx.flags.1,
         })
     }
 
@@ -383,6 +366,7 @@ impl GraphicsCaptureApiHandler for InnerNativeWindowsCapture {
     ) -> Result<(), Self::Error> {
         let width = frame.width();
         let height = frame.height();
+        let timespan = frame.timespan().Duration;
         let mut buffer = frame
             .buffer()
             .map_err(InnerNativeWindowsCaptureError::FrameProcessError)?;
@@ -402,6 +386,7 @@ impl GraphicsCaptureApiHandler for InnerNativeWindowsCapture {
                         width,
                         height,
                         stop_list.clone(),
+                        timespan,
                     ),
                 )
                 .map_err(InnerNativeWindowsCaptureError::PythonError)?;

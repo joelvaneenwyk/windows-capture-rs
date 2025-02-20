@@ -148,9 +148,9 @@ impl ImageEncoder {
 pub enum VideoEncoderError {
     #[error("Windows API Error: {0}")]
     WindowsError(#[from] windows::core::Error),
-    #[error("Frame send error")]
+    #[error("Frame send error: {0}")]
     FrameSendError(#[from] mpsc::SendError<Option<(VideoEncoderSource, TimeSpan)>>),
-    #[error("Audio send error")]
+    #[error("Audio send error: {0}")]
     AudioSendError(#[from] mpsc::SendError<Option<(AudioEncoderSource, TimeSpan)>>),
     #[error("Video is disabled")]
     VideoDisabled,
@@ -760,7 +760,7 @@ impl VideoEncoder {
     /// Returns a `Result` containing the `VideoEncoder` instance if successful, or a
     /// `VideoEncoderError` if an error occurs.
     #[inline]
-    pub fn new_from_stream<P: AsRef<Path>>(
+    pub fn new_from_stream(
         video_settings: VideoSettingsBuilder,
         audio_settings: AudioSettingsBuilder,
         container_settings: ContainerSettingsBuilder,
@@ -991,7 +991,9 @@ impl VideoEncoder {
         };
 
         self.frame_sender.send(Some((
-            VideoEncoderSource::DirectX(SendDirectX::new(unsafe { frame.as_raw_surface() })),
+            VideoEncoderSource::DirectX(SendDirectX::new(unsafe {
+                frame.as_raw_surface().clone()
+            })),
             timespan,
         )))?;
 
@@ -1051,7 +1053,9 @@ impl VideoEncoder {
         };
 
         self.frame_sender.send(Some((
-            VideoEncoderSource::DirectX(SendDirectX::new(unsafe { frame.as_raw_surface() })),
+            VideoEncoderSource::DirectX(SendDirectX::new(unsafe {
+                frame.as_raw_surface().clone()
+            })),
             timespan,
         )))?;
 
