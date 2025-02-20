@@ -25,5 +25,6 @@ tasks:
       - target/release/windows_capture.*
     cmds:
       - cmd: uv sync
+      - cmd: cargo test
       - cmd: cargo build -p windows-capture-python --verbose
       - cmd: cargo test -p windows-capture-python --verbose
