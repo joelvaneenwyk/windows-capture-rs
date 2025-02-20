@@ -10,7 +10,12 @@ vars:
 tasks:
   default:
     cmds:
-      - task: build
+      - task: run
+
+  run:
+    deps: [build]
+    cmds:
+      - cmd: cargo run --example cli -- --monitor-index 1
 
   build:
     sources:
