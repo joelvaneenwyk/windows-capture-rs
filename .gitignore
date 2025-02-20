@@ -6,3 +6,4 @@ dist/
 .git/
 .ruff_cache/
 .task/
+*.mp4
