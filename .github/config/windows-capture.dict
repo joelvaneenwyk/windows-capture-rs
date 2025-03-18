@@ -18,6 +18,7 @@ println
 pylint
 pyproject
 Rgba
+spoti
 struct
 taskfile
 thiserror
